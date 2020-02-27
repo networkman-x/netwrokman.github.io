@@ -5,8 +5,8 @@
     
     <entry>
       <title>Leaflet-React 学习经验分享</title>
-      <link href="/netwrokman.github.io/2020/02/27/leaflet01/"/>
-      <url>/netwrokman.github.io/2020/02/27/leaflet01/</url>
+      <link href="/millie.oi/2020/02/27/leaflet01/"/>
+      <url>/millie.oi/2020/02/27/leaflet01/</url>
       
         <content type="html"><![CDATA[<p><img src="https://leafletjs.com/docs/images/logo.png" alt="leaflet"></p><p>&nbsp;&nbsp;&nbsp;&nbsp;好多前端程序员开始使用leaflet开发webGis项目也就是为了满足项目需求,因为只靠第三方的地图服务基本上满足不了项目需求.接下来我给大家介绍一下自己的半年的从参与项目的过程中获取的干货.  我从使用leaflet开发应用要把leaflet跟react结合开发的应用.所以我讲的一些东西也就是把leaflet跟react结合为重点.</p><h1 id="leaflet目录"><a href="#leaflet目录" class="headerlink" title="leaflet目录"></a>leaflet目录</h1><p><img src="1.png" alt="alt"></p><h2 id="底图"><a href="#底图" class="headerlink" title="底图"></a>底图</h2><h3 id="底图服务类型"><a href="#底图服务类型" class="headerlink" title="底图服务类型"></a>底图服务类型</h3><ul><li>wms服务(默认服务)</li><li>wmts服务</li></ul><h3 id="底图投影问题"><a href="#底图投影问题" class="headerlink" title="底图投影问题"></a>底图投影问题</h3><ul><li>墨卡托投影( EPSG 3857)</li><li>经纬度投影( EPSG 3857)</li></ul><h2 id="layer图层-也就是marker-line-polygon通俗的说就是点-线-面"><a href="#layer图层-也就是marker-line-polygon通俗的说就是点-线-面" class="headerlink" title="layer图层(也就是marker,line,polygon通俗的说就是点,线,面)"></a>layer图层(也就是marker,line,polygon通俗的说就是点,线,面)</h2><h3 id="图层操作-删除图层-添加图层"><a href="#图层操作-删除图层-添加图层" class="headerlink" title="图层操作(删除图层,添加图层)"></a>图层操作(删除图层,添加图层)</h3><ul><li>图层的添加</li><li>图层的删除</li></ul><h3 id="地图上添加DOM模块实现操作栏"><a href="#地图上添加DOM模块实现操作栏" class="headerlink" title="地图上添加DOM模块实现操作栏"></a>地图上添加DOM模块实现操作栏</h3><h2 id="地图上编辑添加新的marker-line-polygon-点-线-面"><a href="#地图上编辑添加新的marker-line-polygon-点-线-面" class="headerlink" title="地图上编辑添加新的marker,line,polygon(点,线,面)"></a>地图上编辑添加新的marker,line,polygon(点,线,面)</h2><h3 id="实现地图上编辑动态实现点线面的叠加-leaflet-draw"><a href="#实现地图上编辑动态实现点线面的叠加-leaflet-draw" class="headerlink" title="实现地图上编辑动态实现点线面的叠加(leaflet-draw)"></a>实现地图上编辑动态实现点线面的叠加(leaflet-draw)</h3>]]></content>
       
