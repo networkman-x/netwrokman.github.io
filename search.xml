@@ -1,20 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Leaflet-React 学习经验分享</title>
+    <title>Leaflet-React 学习经验分享(一)</title>
     <url>/millie.oi/2020/02/27/leaflet01/</url>
     <content><![CDATA[<p><img src="https://leafletjs.com/docs/images/logo.png" alt="leaflet"></p>
-<p>&nbsp;&nbsp;&nbsp;&nbsp;好多前端程序员开始使用leaflet开发webGis项目也就是为了满足项目需求,因为只靠第三方的地图服务基本上满足不了项目需求.接下来我给大家介绍一下自己的半年的从参与项目的过程中获取的干货.  我从使用leaflet开发应用要把leaflet跟react结合开发的应用.所以我讲的一些东西也就是把leaflet跟react结合为重点.</p>
+<blockquote>
+<p>好多前端程序员开始使用leaflet开发webGis项目也就是为了满足项目需求,因为只靠第三方的地图服务基本上满足不了项目需求.接下来我给大家介绍一下自己的半年的从参与项目的过程中获取的干货.  我从使用leaflet开发应用要把leaflet跟react结合开发的应用.所以我讲的一些东西也就是把leaflet跟react结合为重点.  </p>
+</blockquote>
 <h1 id="leaflet目录"><a href="#leaflet目录" class="headerlink" title="leaflet目录"></a>leaflet目录</h1><p><img src="1.png" alt="alt"></p>
-<h2 id="底图"><a href="#底图" class="headerlink" title="底图"></a>底图</h2><h3 id="底图服务类型"><a href="#底图服务类型" class="headerlink" title="底图服务类型"></a>底图服务类型</h3><ul>
-<li>wms服务(默认服务)</li>
-<li>wmts服务</li>
+<h2 id="底图"><a href="#底图" class="headerlink" title="底图"></a>底图</h2><h3 id="底图服务类型"><a href="#底图服务类型" class="headerlink" title="底图服务类型"></a>底图服务类型</h3><blockquote>
+<p>本人所参与的项目都是政府项目,所以第三方底图服务都使用<a href="https://www.tianditu.gov.cn/">天地图</a>,大家同样可以去申请使用.</p>
+</blockquote>
+<ul>
+<li>wms服务(默认服务)<blockquote>
+<p>leaflet 默认支持wms格式的地图服务,简单使用方法react-leaflet官网上就有相应的实例. <a href="https://github.com/PaulLeCam/react-leaflet/blob/master/example/components/wms-tile-layer.js">react-leaflet wmts 实例</a></p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">Map</span>  <span class="attr">crs</span>=<span class="string">&#123;L.CRS.EPSG3857&#125;</span> <span class="attr">classname</span>=<span class="string">"地图"</span> <span class="attr">center</span>=<span class="string">&#123;this.state.center&#125;</span> <span class="attr">zoom</span>=<span class="string">&#123;this.state.zoom&#125;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">WMSTileLayer</span></span></span><br><span class="line"><span class="tag">          <span class="attr">url</span>=<span class="string">"https://demo.boundlessgeo.com/geoserver/ows"</span></span></span><br><span class="line"><span class="tag">        /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Map</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>wmts服务<blockquote>
+<p>其实使用wmts格式地图服务的调用也是跟wms格式地图调用方法一样简单,但是实现过程中我失败了,官网的方法没能用.解决这个问题我就开始深入的研究leaflet这个框架了.废话说到这里,开始解决问题吧.<br>折腾了一段时间发现,这个不是自己配置错误的问题,而是我是用的是<a href="https://www.tianditu.gov.cn/">天地图</a>的wmts格式的服务,国内的地图标准好像跟国外的地图服务标准在某些细节上参数转化不太一样,所以出现了我n次配置,一次都没能成功调用的情况.本来我很想解剖源代码给你们解释来着,但是我觉得没必要你们就看我的实例自己懂就可以,不懂得自己找我解决问题.这里我就填一个github实例.</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">Map</span>  <span class="attr">crs</span>=<span class="string">&#123;L.CRS.EPSG3857&#125;</span> <span class="attr">classname</span>=<span class="string">"地图"</span> <span class="attr">center</span>=<span class="string">&#123;this.state.center&#125;</span> <span class="attr">zoom</span>=<span class="string">&#123;this.state.zoom&#125;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"> <span class="tag">&lt;<span class="name">WMTSTileLayer</span></span></span><br><span class="line"><span class="tag">            <span class="attr">url</span>=<span class="string">"http://xxxx/img_c/wmts"</span>  //<span class="attr">url</span> 地址</span></span><br><span class="line"><span class="tag">            <span class="attr">layer</span>=<span class="string">"img"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">tilematrixSet</span>=<span class="string">"c"</span>                             //这个参数跟天地图的投影有关 (球面墨卡托投影<span class="attr">c</span> ,经纬度<span class="attr">w</span>,剩下的固定变量)</span></span><br><span class="line"><span class="tag">            <span class="attr">format</span>=<span class="string">"tile"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">tileSize</span>=<span class="string">&#123;256&#125;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">transparent</span>=<span class="string">&#123;true&#125;</span></span></span><br><span class="line"><span class="tag">            <span class="attr">maxZoom</span>=<span class="string">&#123;17&#125;</span> <span class="attr">minZoom</span>=<span class="string">&#123;3&#125;</span></span></span><br><span class="line"><span class="tag">          /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Map</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
 </ul>
 <h3 id="底图投影问题"><a href="#底图投影问题" class="headerlink" title="底图投影问题"></a>底图投影问题</h3><ul>
-<li>墨卡托投影( EPSG 3857)</li>
-<li>经纬度投影( EPSG 3857)</li>
+<li>墨卡托投影( EPSG 3857)<blockquote>
+<p>L.CRS.EPSG3857 参数来设置</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">Map</span>  <span class="attr">crs</span>=<span class="string">&#123;L.CRS.EPSG3857&#125;</span> <span class="attr">classname</span>=<span class="string">"地图"</span> <span class="attr">center</span>=<span class="string">&#123;this.state.center&#125;</span> <span class="attr">zoom</span>=<span class="string">&#123;this.state.zoom&#125;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//react各种地图组件 </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Map</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>经纬度投影( EPSG 3857)<blockquote>
+<p>L.CRS.EPSG4326 参数来设置</p>
+</blockquote>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">Map</span>  <span class="attr">crs</span>=<span class="string">&#123;L.CRS.EPSG4326&#125;</span> <span class="attr">classname</span>=<span class="string">"地图"</span> <span class="attr">center</span>=<span class="string">&#123;this.state.center&#125;</span> <span class="attr">zoom</span>=<span class="string">&#123;this.state.zoom&#125;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">//react各种地图组件 </span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Map</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="layer图层-也就是marker-line-polygon通俗的说就是点-线-面"><a href="#layer图层-也就是marker-line-polygon通俗的说就是点-线-面" class="headerlink" title="layer图层(也就是marker,line,polygon通俗的说就是点,线,面)"></a>layer图层(也就是marker,line,polygon通俗的说就是点,线,面)</h2></li>
 </ul>
-<h2 id="layer图层-也就是marker-line-polygon通俗的说就是点-线-面"><a href="#layer图层-也就是marker-line-polygon通俗的说就是点-线-面" class="headerlink" title="layer图层(也就是marker,line,polygon通俗的说就是点,线,面)"></a>layer图层(也就是marker,line,polygon通俗的说就是点,线,面)</h2><h3 id="图层操作-删除图层-添加图层"><a href="#图层操作-删除图层-添加图层" class="headerlink" title="图层操作(删除图层,添加图层)"></a>图层操作(删除图层,添加图层)</h3><ul>
+<h3 id="图层操作-删除图层-添加图层"><a href="#图层操作-删除图层-添加图层" class="headerlink" title="图层操作(删除图层,添加图层)"></a>图层操作(删除图层,添加图层)</h3><ul>
 <li>图层的添加</li>
 <li>图层的删除</li>
 </ul>
